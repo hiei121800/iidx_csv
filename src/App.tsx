@@ -15,62 +15,34 @@ export default function EditPost() {
   function handleSubmit(e: React.ChangeEvent<any>) {
     // Prevent the browser from reloading the page
     e.preventDefault();
-
-    // Read the form data
-    const form = e.target;
-    const formData = new FormData(form);
-
-    // Or you can work with it as a plain object:
-    const formJson = Object.fromEntries(formData.entries());
-    console.log(formJson);
-
-
+  }
+  // ボタン押下時に発火してログを出力する。
+  function wave(text: string) {
+    console.log(text);
+  }
+  // Reactでデフォで用意されている、値を変数に入れるためのuseState関数。引数に値を入れるとそれが初期値になる。
+  const [value, setValue] = useState("");
+  // テキストエリアを編集したときに呼び出される。
+  // setValueで、画面の値に入力された値を、「value」変数に入れる。
+  function onChange(event: React.ChangeEvent<any>) {
+    setValue(event.target.value);
   }
   return (
-    // <Container>
-    //   <Row>
-    //     <Col>
-    //       <form method="post" onSubmit={handleSubmit}>
-    //         <label>
-    //           <textarea
-    //             name="postContent"
-    //             defaultValue=""
-    //             rows={20}
-    //             cols={100}
-    //           />
-    //         </label>
-    //         <hr />
-    //         <button type="reset">Reset edits</button>
-    //         <button type="submit">Save post</button>
-    //       </form>
-    //       </Col>
-    //   </Row>
-    // </Container>
-    <Form method='post' onSubmit={handleSubmit}>
-      <Form.Group className='mb-3' controlId='exampleForm.ContolInput1'>
-        <Form.Label>Email Address</Form.Label>
-        <Form.Control type='email' placeholder='name@example.com' />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-        <Form.Label>Example textarea</Form.Label>
-        <Form.Control as="textarea" rows={3} />
-      </Form.Group>
-      <Button variant="primary" type='reset'>reset edits</Button>{' '}
-      <Button variant="primary" type='submit'>save post</Button>{' '}
-    </Form>
-    
-    // <form method="post" onSubmit={handleSubmit}>
-    //   <label>
-    //     <textarea
-    //       name="postContent"
-    //       defaultValue=""
-    //       rows={20}
-    //       cols={100}
-    //     />
-    //   </label>
-    //   <hr />
-    //   <button type="reset">Reset edits</button>
-    //   <button type="submit">Save post</button>
-    // </form>
+    <Container>
+      <Form method='post' onSubmit={handleSubmit}>
+        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+          <Form.Label>CSV入力</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={3}
+            value={value}
+            onChange={onChange} />
+        </Form.Group>
+        {/* // リセットボタンについてはあとで実装予定。 */}
+        <Button as="input" type="reset" value="Reset" />
+        <Button variant="primary" type='submit' onClick={() => wave(value)}>CSV取り込み</Button>{' '}
+      </Form>
+      {value}
+    </Container>
   );
 }
